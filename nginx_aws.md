@@ -46,7 +46,7 @@ sudo ufw allow ssh (Port 22)
 sudo ufw allow http (Port 80)
 sudo ufw allow https (Port 443)
 sudo ufw allow from <IP_ADDRESS>
-sudo ufw allow from <IP_ADDRESS> to any port <PORT>
+sudo ufw allow from 60.243.250.143 to any port 27017
 sudo ufw deny from <IP_ADDRESS>
 sudo ufw delete allow from 60.243.250.143 to any port 27017
 sudo ufw delete deny from 60.243.250.143
