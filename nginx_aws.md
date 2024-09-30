@@ -91,3 +91,24 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 # Only valid for 90 days, test the renewal process with
 certbot renew --dry-run
 ```
+
+## 9. Install redis
+```
+sudo apt-get install lsb-release curl gpg
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+sudo chmod 644 /usr/share/keyrings/redis-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+sudo apt-get update
+sudo apt-get install redis
+
+sudo systemctl start redis
+sudo systemctl enable redis
+sudo systemctl stop redis
+
+# create user on redis-server
+redis-cli
+ACL SETUSER newuser on >password123 allcommands allkeys
+CONFIG REWRITE
+redis-cli -u redis://newuser:password123@127.0.0.1:6379
+
+```
