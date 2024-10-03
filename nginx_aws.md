@@ -101,9 +101,9 @@ echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://pack
 sudo apt-get update
 sudo apt-get install redis
 
-sudo systemctl start redis
-sudo systemctl enable redis
-sudo systemctl stop redis
+sudo systemctl start redis-server
+sudo systemctl enable redis-server
+sudo systemctl stop redis-server
 
 # create user on redis-server
 redis-cli
