@@ -42,9 +42,9 @@ pm2 startup ubuntu
 ```
 sudo ufw enable
 sudo ufw status
-sudo ufw allow ssh (Port 22)
-sudo ufw allow http (Port 80)
-sudo ufw allow https (Port 443)
+sudo ufw allow ssh
+sudo ufw allow http
+sudo ufw allow https
 sudo ufw allow from <IP_ADDRESS>
 sudo ufw allow from 60.243.250.143 to any port 27017
 sudo ufw deny from <IP_ADDRESS>
