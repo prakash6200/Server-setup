@@ -111,6 +111,11 @@ ACL SETUSER newuser on >password123 allcommands allkeys
 CONFIG REWRITE
 redis-cli -u redis://newuser:password123@127.0.0.1:6379
 
+# Prevent Time Out
+redis-cli
+CONFIG SET protected-mode no
+CONFIG REWRITE
+
 ```
 
 
