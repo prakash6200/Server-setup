@@ -10,10 +10,10 @@ I would be creating a t2.medium ubuntu machine for this demo.
 
 ## 3. Install Node and NPM
 ```
-curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt install nodejs
-
+curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
 node --version
+
 ```
 
 ## 4. Clone your project from Github
