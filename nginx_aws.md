@@ -133,5 +133,15 @@ sudo systemctl daemon-reload
 sudo systemctl enable mongod
 sudo systemctl status mongod
 
+```
+
+## 11. Create New user 
+```
+sudo apt-get install gnupg curl
+sudo adduser userName
+sudo usermod -aG sudo userName
+
+ls /home
+cat /etc/passwd | grep walletapiserver
 
 ```
