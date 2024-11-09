@@ -72,6 +72,46 @@ Add the following to the location part of the server block
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
     }
+
+
+server {
+    server_name  boostbullion.com;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/boostbullion.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/boostbullion.com/privkey.pem; # managed by Certb>
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+
+server {
+    server_name user.boostbullion.com;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/user.boostbullion.com/fullchain.pem; # managed by Ce>
+    ssl_certificate_key /etc/letsencrypt/live/user.boostbullion.com/privkey.pem; # managed by >
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
 ```
 ```
 # Check NGINX config
