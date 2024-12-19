@@ -173,6 +173,14 @@ sudo systemctl daemon-reload
 sudo systemctl enable mongod
 sudo systemctl status mongod
 
+dump db
+
+mongodump --uri='mongodb://spots:$JPKasdfwe4345ttfgd5ty56jh8uuh78hw5ch@18.61.119.154:27017/admin'
+
+restore db with name 
+
+mongorestore --db newDbName dump/cloneDbName
+
 ```
 
 ## 11. Create New user 
