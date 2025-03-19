@@ -193,3 +193,47 @@ ls /home
 cat /etc/passwd | grep walletapiserver
 
 ```
+
+## 12. Install Postgresql Database and setup
+```
+sudo apt update && sudo apt install -y postgresql postgresql-contrib
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+sudo systemctl status postgresql
+sudo systemctl restart postgresql
+
+
+sudo -i -u postgres
+
+psql
+
+CREATE DATABASE fib_db;
+CREATE USER fib_user WITH PASSWORD 'fib_password';
+ALTER ROLE fib_user SET client_encoding TO 'utf8';
+ALTER ROLE fib_user SET default_transaction_isolation TO 'read committed';
+ALTER ROLE fib_user SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE fib_db TO fib_user;
+
+
+\q
+
+exit
+
+sudo nano /etc/postgresql/14/main/postgresql.conf
+listen_addresses = 'localhost'
+
+echo 'export DB_HOST=localhost' >> ~/.bashrc
+echo 'export DB_USER=fib_user' >> ~/.bashrc
+echo 'export DB_PASSWORD=fib_password' >> ~/.bashrc
+echo 'export DB_NAME=fib_db' >> ~/.bashrc
+echo 'export DB_PORT=5432' >> ~/.bashrc
+source ~/.bashrc
+
+
+ALTER USER fib_user CREATEDB;
+ALTER USER fib_user CREATEROLE;
+ALTER USER fib_user SUPERUSER;
+ALTER USER fib_user WITH PASSWORD 'fib_password';
+GRANT ALL PRIVILEGES ON DATABASE fib_db TO fib_user;
+GRANT ALL ON SCHEMA public TO fib_user;
+
