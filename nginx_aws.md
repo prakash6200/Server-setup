@@ -237,6 +237,29 @@ ALTER USER fib_user WITH PASSWORD 'fib_password';
 GRANT ALL PRIVILEGES ON DATABASE fib_db TO fib_user;
 GRANT ALL ON SCHEMA public TO fib_user;
 
+
+
+Another Method
+
+sudo -u postgres psql
+
+
+-- Create user
+CREATE USER jocky_user WITH PASSWORD 'jocky_tading';
+-- Create database
+CREATE DATABASE jocky_db OWNER jocky_user;
+-- Grant privileges
+GRANT ALL PRIVILEGES ON DATABASE jocky_db TO jocky_user;
+\q  
+
+sudo systemctl restart postgresql
+
+for test
+psql -h localhost -U jocky_user -d jocky_db
+
+
+
+
 ```
 
 ## 13. Run go via build  
