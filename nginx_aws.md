@@ -237,3 +237,51 @@ ALTER USER fib_user WITH PASSWORD 'fib_password';
 GRANT ALL PRIVILEGES ON DATABASE fib_db TO fib_user;
 GRANT ALL ON SCHEMA public TO fib_user;
 
+```
+
+## 13. Run go via build  
+```
+cd /home/prakash/JockyTrading
+go build -o jockyTradingApp main.go
+
+sudo mv jockyTradingApp /usr/local/bin/
+
+sudo nano /etc/systemd/system/jocky.service
+
+
+
+[Unit]
+Description=Jocky Trading Go App
+After=network.target
+
+[Service]
+User=prakash
+WorkingDirectory=/home/prakash/JockyTrading
+ExecStart=/usr/local/bin/jockyTradingApp
+Restart=always
+RestartSec=5
+Environment=DB_HOST=localhost
+Environment=DB_USER=jocky_user
+Environment=DB_PASSWORD=jocky_tading
+Environment=DB_NAME=jocky_db
+Environment=DB_PORT=5432
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+sudo systemctl daemon-reload
+sudo systemctl start jocky.service
+sudo systemctl enable jocky.service
+
+
+sudo systemctl status jocky.service
+
+sudo journalctl -u jocky.service -f
+
+```
+
+
+```
