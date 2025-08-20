@@ -258,6 +258,27 @@ for test
 psql -h localhost -U jocky_user -d jocky_db
 
 
+Create dump on server
+
+pg_dump -U postgres -h localhost -d your_db_name > backup.sql
+PGPASSWORD="fib_password" pg_dump -U fib_user -h localhost -p 5432 fib_db > /home/ubuntu/fib_db_backup.sql
+
+
+Take backup on localhost
+
+scp -i your-key.pem ubuntu@your-ec2-ip:/home/ubuntu/fib_db_backup.sql ~/Desktop/
+
+
+Create Database name
+
+createdb -U postgres (this is user name) fib_db_local (this is databasename)
+
+
+Restore db
+
+psql -U postgres -d fib_db_local -f ~/Desktop/fib_db_backup.sql
+
+
 
 
 ```
