@@ -241,6 +241,26 @@ GRANT ALL PRIVILEGES ON DATABASE fib_db TO fib_user;
 GRANT ALL ON SCHEMA public TO fib_user;
 
 
+one more method for 4gb ram aws
+sudo apt update
+sudo apt install postgresql postgresql-contrib -y
+
+# CREATE USER + DB
+sudo -u postgres psql <<EOF
+CREATE USER fib_user WITH PASSWORD 'fib_password';
+CREATE DATABASE fib_db OWNER fib_user;
+GRANT ALL PRIVILEGES ON DATABASE fib_db TO fib_user;
+\c fib_db
+GRANT ALL PRIVILEGES ON SCHEMA public TO fib_user;
+ALTER SCHEMA public OWNER TO fib_user;
+EOF
+
+# RESTART POSTGRES
+sudo systemctl restart postgresql
+
+echo "✅ PostgreSQL fresh install complete!"
+echo "✅ DB: fib_db | USER: fib_user | PASS: fib_password"
+
 
 Another Method
 
