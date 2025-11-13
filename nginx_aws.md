@@ -63,6 +63,7 @@ sudo nano /etc/nginx/sites-available/default
 Add the following to the location part of the server block
 ```
     server_name yourdomain.com www.yourdomain.com;
+    client_max_body_size 50M;
 
     location / {
         proxy_pass http://localhost:8080; #whatever port your app runs on
