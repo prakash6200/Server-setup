@@ -116,6 +116,78 @@ server {
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
 }
+
+
+
+
+# ===============================
+# Backend - Node.js Reverse Proxy
+# ===============================
+server {
+    listen 80;
+    server_name backend.infigrowth.ae;
+    client_max_body_size 50M;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+# ===============================
+# Landing Page (Main Website)
+# ===============================
+server {
+    listen 80;
+    server_name infigrowth.ae www.infigrowth.ae;
+
+    root /var/www/infigrowth-landing/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+
+# ===============================
+# User Panel - React Frontend
+# ===============================
+server {
+    listen 80;
+    server_name user.infigrowth.ae;
+
+    root /var/www/infigrowth-user/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+
+# ===============================
+# Admin Panel - React Frontend
+# ===============================
+server {
+    listen 80;
+    server_name admin.infigrowth.ae;
+
+    root /var/www/infigrowth-admin/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+
 ```
 ```
 # Check NGINX config
@@ -302,6 +374,39 @@ Restore db
 
 psql -U postgres -d fib_db_local -f ~/Desktop/fib_db_backup.sql
 
+
+
+
+Ubuntu setup
+
+sudo apt update
+sudo apt install -y postgresql postgresql-contrib
+
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+sudo systemctl status postgresql
+
+sudo -u postgres psql
+
+CREATE USER fib_user WITH PASSWORD 'fib_password';
+CREATE DATABASE fib_db OWNER fib_user;
+
+ALTER ROLE fib_user SET client_encoding TO 'utf8';
+ALTER ROLE fib_user SET default_transaction_isolation TO 'read committed';
+ALTER ROLE fib_user SET timezone TO 'UTC';
+
+GRANT ALL PRIVILEGES ON DATABASE fib_db TO fib_user;
+
+\c fib_db
+GRANT ALL ON SCHEMA public TO fib_user;
+ALTER SCHEMA public OWNER TO fib_user;
+
+\q
+sudo systemctl restart postgresql
+
+
+Test connection
+psql -h localhost -U fib_user -d fib_db
 
 
 
